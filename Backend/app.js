@@ -9,11 +9,7 @@ const { GoogleGenAI } = require("@google/genai");
 const app = express();
 
 app.use(cors({
-    origin: [
-        "https://resume-kxlrwvgxc-karthikeyans-projects-73b3fcfd.vercel.app",
-        "http://http://127.0.0.1:5500/",
-        "http://localhost:5173"
-    ],
+    origin: (origin, callback) => callback(null, true),
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
