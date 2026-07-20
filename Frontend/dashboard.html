@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Dashboard | ResumeIQ</title>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    
+    <style>
+        .dashboard-wrapper {
+            max-width: 90%;
+            margin: 140px auto 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .dashboard-title-section h1 {
+            font-size: 36px;
+            color: #111827;
+        }
+
+        /* Top Ring Metric Containers */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .metric-score-card {
+            background: #ffffff;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+            text-align: center;
+        }
+
+        .metric-score-card h3 {
+            font-size: 16px;
+            color: #6B7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 20px;
+        }
+
+        .circle-progress-bar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(#4F46E5 0% 0%, #f0f4f8 0% 100%);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .circle-progress-bar::before {
+            content: "";
+            position: absolute;
+            width: 98px;
+            height: 98px;
+            border-radius: 50%;
+            background-color: #ffffff;
+        }
+
+        .circle-progress-value {
+            position: relative;
+            font-size: 26px;
+            font-weight: 800;
+            color: #111827;
+        }
+
+        /* Insights Cards Layout Split */
+        .insights-section-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 900px) {
+            .insights-section-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .insight-card-block {
+            background: #ffffff;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+            margin-bottom: 25px;
+        }
+
+        .insight-card-block h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .insight-card-block h2 i {
+            font-size: 24px;
+        }
+
+        .result-list-items {
+            list-style: none;
+        }
+
+        .result-list-items li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 16px;
+            font-size: 15px;
+            color: #4B5563;
+            line-height: 1.6;
+        }
+
+        .result-list-items li::before {
+            font-family: 'remixicon';
+            position: absolute;
+            left: 0;
+            top: 1px;
+            font-weight: bold;
+        }
+
+        /* Colored bullet indicators mimicking your UI needs */
+        .list-suggestions li::before { content: "\ea12"; color: #4F46E5; } /* Arrow right icon */
+        .list-skills li::before { content: "\eb9a"; color: #EF4444; } /* Close/Error circle icon */
+        .list-improvements li::before { content: "\ef6b"; color: #10B981; } /* Sparkles icon */
+        .list-questions li::before { content: "\ee2a"; color: #F59E0B; } /* Help chat icon */
+    </style>
+</head>
+<body>
+
+<header>
+    <nav class="navbar">
+        <a href="index.html" class="logo">
+            Resume<span>IQ</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#" class="active" style="color:#4F46E5;">Dashboard</a></li>
+        </ul>
+        <div class="buttons">
+            <a href="index.html" class="start" style="text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                <i class="ri-arrow-left-line"></i> Analyze New
+            </a>
+        </div>
+    </nav>
+</header>
+
+<div class="dashboard-wrapper">
+    <div class="dashboard-title-section">
+        <h1>Analysis Metrics Complete</h1>
+        
+    </div>
+
+    <div class="metrics-grid">
+        <div class="metric-score-card">
+            <h3>ATS Score</h3>
+            <div class="circle-progress-bar" id="atsProgressRing">
+                <div class="circle-progress-value" id="atsScoreValue">--</div>
+            </div>
+        </div>
+        <div class="metric-score-card">
+            <h3>Job Match Rating</h3>
+            <div class="circle-progress-bar" id="matchProgressRing">
+                <div class="circle-progress-value" id="matchScoreValue">--</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="insights-section-grid">
+        <div class="left-insights-column">
+            <div class="insight-card-block">
+                <h2><i class="ri-lightbulb-line" style="color: #4F46E5;"></i> Optimization Suggestions</h2>
+                <ul class="result-list-items list-suggestions" id="suggestionsContainer"></ul>
+            </div>
+            
+            <div class="insight-card-block">
+                <h2><i class="ri-magic-line" style="color: #10B981;"></i> One-Click Improvements</h2>
+                <ul class="result-list-items list-improvements" id="improvementsContainer"></ul>
+            </div>
+        </div>
+
+        <div class="right-insights-column">
+            <div class="insight-card-block">
+                <h2><i class="ri-close-circle-line" style="color: #EF4444;"></i> Missing Skill Gaps</h2>
+                <ul class="result-list-items list-skills" id="skillsContainer"></ul>
+            </div>
+
+            <div class="insight-card-block">
+                <h2><i class="ri-questionnaire-line" style="color: #F59E0B;"></i> Practice Interview Questions</h2>
+                <ul class="result-list-items list-questions" id="questionsContainer"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const serialData = sessionStorage.getItem("resumeAnalysisData");
+
+        if (!serialData) {
+            alert("No parsing records found. Returning to upload area.");
+            window.location.href = "index.html";
+            return;
+        }
+
+        const analysis = JSON.parse(serialData);
+
+        document.getElementById("atsScoreValue").innerText = analysis.atsScore;
+        document.getElementById("matchScoreValue").innerText = `${analysis.jobMatch}%`;
+
+        document.getElementById("atsProgressRing").style.background = `conic-gradient(#10B981 ${analysis.atsScore}%, #f0f4f8 ${analysis.atsScore}% 100%)`;
+        document.getElementById("matchProgressRing").style.background = `conic-gradient(#4F46E5 ${analysis.jobMatch}%, #f0f4f8 ${analysis.jobMatch}% 100%)`;
+
+        populateListDisplay("suggestionsContainer", analysis.suggestions);
+        populateListDisplay("improvementsContainer", analysis.oneClickImprovements);
+        populateListDisplay("skillsContainer", analysis.missingSkills);
+        populateListDisplay("questionsContainer", analysis.interviewQuestions);
+    });
+
+    function populateListDisplay(targetId, rawArray) {
+        const container = document.getElementById(targetId);
+        container.innerHTML = "";
+
+        if (!rawArray || rawArray.length === 0) {
+            container.innerHTML = `<li>No matching details flagged by the analyzer.</li>`;
+            return;
+        }
+
+        rawArray.forEach(txt => {
+            const entryItem = document.createElement("li");
+            entryItem.innerText = txt;
+            container.appendChild(entryItem);
+        });
+    }
+</script>
+
+</body>
+</html>
