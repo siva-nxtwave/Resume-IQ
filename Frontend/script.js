@@ -27,7 +27,7 @@ resumeInput.addEventListener("change", async (event) => {
     formData.append("resume", file);
 
     try {
-        const response = await fetch("https://resume-analyser-x75a.onrender.com/analyze", {
+        const response = await fetch("https://resume-iq-gnp3.onrender.com/analyze", {
             method: "POST",
             body: formData
         });
