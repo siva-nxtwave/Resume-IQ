@@ -9,7 +9,11 @@ const { GoogleGenAI } = require("@google/genai");
 const app = express();
 
 app.use(cors({
-    origin: "*",
+    origin: [
+        "https://resume-kxlrwvgxc-karthikeyans-projects-73b3fcfd.vercel.app",
+        "http://http://127.0.0.1:5500/",
+        "http://localhost:5173"
+    ],
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
@@ -92,7 +96,7 @@ app.get("/", (req, res) => {
     res.send("Backend is working!");
 });
 
-const PORT = 5050;
+const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
