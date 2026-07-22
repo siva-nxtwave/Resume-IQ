@@ -22,7 +22,6 @@
             color: #111827;
         }
 
-        /* Top Ring Metric Containers */
         .metrics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -75,17 +74,10 @@
             color: #111827;
         }
 
-        /* Insights Cards Layout Split */
         .insights-section-grid {
             display: grid;
             grid-template-columns: 1.5fr 1fr;
             gap: 30px;
-        }
-
-        @media (max-width: 900px) {
-            .insights-section-grid {
-                grid-template-columns: 1fr;
-            }
         }
 
         .insight-card-block {
@@ -132,11 +124,72 @@
             font-weight: bold;
         }
 
-        /* Colored bullet indicators mimicking your UI needs */
-        .list-suggestions li::before { content: "\ea12"; color: #4F46E5; } /* Arrow right icon */
-        .list-skills li::before { content: "\eb9a"; color: #EF4444; } /* Close/Error circle icon */
-        .list-improvements li::before { content: "\ef6b"; color: #10B981; } /* Sparkles icon */
-        .list-questions li::before { content: "\ee2a"; color: #F59E0B; } /* Help chat icon */
+        .list-suggestions li::before { content: "\ea12"; color: #4F46E5; }
+        .list-skills li::before { content: "\eb9a"; color: #EF4444; }
+        .list-improvements li::before { content: "\ef6b"; color: #10B981; }
+        .list-questions li::before { content: "\ee2a"; color: #F59E0B; }
+
+        @media (max-width: 768px) {
+            .dashboard-wrapper {
+                max-width: 92%;
+                margin: 100px auto 40px;
+                gap: 24px;
+            }
+
+            .dashboard-title-section h1 {
+                font-size: 26px;
+                text-align: center;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .metric-score-card {
+                padding: 24px 20px;
+            }
+
+            .circle-progress-bar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .circle-progress-bar::before {
+                width: 80px;
+                height: 80px;
+            }
+
+            .circle-progress-value {
+                font-size: 22px;
+            }
+
+            .insights-section-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .insight-card-block {
+                padding: 20px;
+                border-radius: 16px;
+                margin-bottom: 16px;
+            }
+
+            .insight-card-block h2 {
+                font-size: 18px;
+                gap: 8px;
+            }
+
+            .insight-card-block h2 i {
+                font-size: 20px;
+            }
+
+            .result-list-items li {
+                font-size: 14px;
+                padding-left: 24px;
+                margin-bottom: 12px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -161,7 +214,6 @@
 <div class="dashboard-wrapper">
     <div class="dashboard-title-section">
         <h1>Analysis Metrics Complete</h1>
-        
     </div>
 
     <div class="metrics-grid">
@@ -210,11 +262,7 @@
     document.addEventListener("DOMContentLoaded", () => {
         const serialData = sessionStorage.getItem("resumeAnalysisData");
 
-        if (!serialData) {
-            alert("No parsing records found. Returning to upload area.");
-            window.location.href = "index.html";
-            return;
-        }
+        
 
         const analysis = JSON.parse(serialData);
 
