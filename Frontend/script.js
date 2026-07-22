@@ -44,15 +44,14 @@ resumeInput.addEventListener("change", async (event) => {
 
         console.log("Success Data:", data);
 
-alert("Redirecting now");
+alert("Analysing completed");
 
 window.location.href = "dashboard.html";
 
     } catch (error) {
         console.error("Full Frontend Error Log:", error);
         alert(`Upload failed: ${error.message}`);
-        
-        // Revert button state if things fail
+
         uploadBtn.innerHTML = originalBtnHTML;
         uploadBtn.style.opacity = "1";
         uploadBtn.style.pointerEvents = "auto";
